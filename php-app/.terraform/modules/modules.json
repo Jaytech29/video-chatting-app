@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"acm","Source":"../aws-acm","Dir":"../aws-acm"},{"Key":"asg","Source":"../asg-group-module","Dir":"../asg-group-module"},{"Key":"mysql","Source":"../rds-mysql","Dir":""},{"Key":"vpc","Source":"../../vpc-modules/vpc-module","Dir":""}]}

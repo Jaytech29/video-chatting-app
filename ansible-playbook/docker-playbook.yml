@@ -1,0 +1,40 @@
+# Playbook to build docker image, tag it and push to dockerhub
+---
+- name: Build and push Docker image
+  hosts: docker
+  become: yes
+
+  vars:
+    docker_image_name: my-image
+    docker_image_tag: 
+    docker_hub_username: my-username
+    docker_hub_password: my-password
+    docker_hub_repository: "{{ docker_hub_username }}/{{ docker_image_name }}"
+    dockerfile_path: /path/to/Dockerfile
+
+  tasks:
+    - name: Build Docker image
+      docker_image:
+        path: "{{ dockerfile_path }}"
+        name: "{{ docker_image_name }}"
+        tag: "{{ docker_image_tag }}"
+      register: docker_build_output
+
+    - name: Tag Docker image
+      docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        repository: "{{ docker_hub_repository }}"
+        push: no
+      when: docker_build_output is changed
+
+    - name: Login to Docker Hub
+      docker_login:
+        username: "{{ docker_hub_username }}"
+        password: "{{ docker_hub_password }}"
+
+    - name: Push Docker image to Docker Hub
+      docker_image:
+        name: "{{ docker_image_name }}:{{ docker_image_tag }}"
+        repository: "{{ docker_hub_repository }}"
+        push: yes
+      when: docker_build_output is changed

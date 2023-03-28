@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_NAME = "my-php-app"
+        DOCKER_IMAGE = "my-docker-registry/${APP_NAME}:${BUILD_NUMBER}"
+        ARTIFACTORY_URL = "https://nexus.example.com"
+        ARTIFACTORY_REPO = "php-repo"
+    }
+
+    stages {
+        stage('Checkout code') {
+            steps {
+                echo 'Checking out code...'
+                git credentialsId: 'my-git-credentials', url: 'https://github.com/myuser/myrepo.git'
+            }
+        }
+
+        stage('Install dependencies') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'composer install'
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                echo 'Running PHPUnit tests...'
+                sh 'phpunit'
+            }
+        }
+
+        stage('Code quality analysis') {
+            steps {
+                echo 'Running code quality analysis...'
+                sh 'phpcs --standard=PSR2 app'
+            }
+        }
+
+        stage('Build application') {
+            steps {
+                echo 'Building application...'
+                sh 'php -d phar.readonly=0 build.php'
+            }
+        }
+
+        stage('Deploy to Nexus Artifactory') {
+            steps {
+                echo 'Deploying to Nexus Artifactory...'
+                sh 'mvn deploy:deploy-file \
+                    -DgroupId=com.example \
+                    -DartifactId=my-php-app \
+                    -Dversion=${BUILD_NUMBER} \
+                    -Dpackaging=phar \
+                    -Dfile=my-php-app.phar \
+                    -DrepositoryId=artifactory \
+                    -Durl=${ARTIFACTORY_URL}/repository/${ARTIFACTORY_REPO}/'
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                echo 'Building Docker image...'
+                sh "docker build -t ${DOCKER_IMAGE} ."
+                withCredentials([usernamePassword(credentialsId: 'my-docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                }
+                sh "docker push ${DOCKER_IMAGE}"
+            }
+        }
+    }
+}

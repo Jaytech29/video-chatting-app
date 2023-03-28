@@ -1,0 +1,31 @@
+FROM php:8.0-apache
+
+# Copy the application code to the container
+COPY . /var/www/html/
+
+# Install necessary extensions and libraries
+RUN apt-get update && \
+    apt-get install -y \
+        libzip-dev \
+        zip \
+        unzip && \
+    docker-php-ext-install pdo_mysql zip
+
+# Enable Apache modules and configure virtual host
+RUN a2enmod rewrite && \
+    echo "<VirtualHost *:80>\n\
+        DocumentRoot /var/www/html/public\n\
+        <Directory /var/www/html/public>\n\
+            AllowOverride All\n\
+            Require all granted\n\
+        </Directory>\n\
+    </VirtualHost>" > /etc/apache2/sites-available/000-default.conf
+
+# Set the working directory to the application root
+WORKDIR /var/www/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache
+CMD ["apache2-foreground"]

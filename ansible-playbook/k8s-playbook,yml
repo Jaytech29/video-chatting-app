@@ -1,0 +1,10 @@
+---
+- name: Deploy application on Kubernetes
+  hosts: k8s
+  become: true
+
+  tasks:
+    - name: Apply deployment configuration
+      kubectl:
+        src: deploy-k8s.yml
+        state: present
