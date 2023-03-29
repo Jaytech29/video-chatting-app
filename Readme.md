@@ -53,7 +53,7 @@ We use Inspector to scan the application for security vulnerabilities.
 We encrypt data stored in S3, RDS, and other services using KMS.
 
 Scalability:
-To scale the application for increased demand, we can:
+To scale the application for increased demand, we:
 
 Increase the number of EC2 instances in the ASG to handle more traffic.
 Use larger instance types for the EC2 instances to handle more requests per second.
