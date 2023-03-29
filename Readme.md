@@ -3,7 +3,7 @@ Project Submission Document:
 Building a Highly Scalable and Available 3 tier Application on AWS
 
 Introduction:
-Designed and implemented a highly scalable and available web application on Amazon Web Services (AWS) for a PHP8 application. This document outlines the list of services used in the architecture, how they are networked and deployed, and how the solution can be scaled for increased demand. I also discuss the technical approach used to ensure zero downtime deployments supporting Continuous Integration and Continuous Deployment (CI/CD). Finally, Address assumptions and trade-offs made between production, staging, and development environments and propose a high-level disaster recovery plan for this solution.
+Designed and implemented a highly scalable and available web application on Amazon Web Services (AWS) for a PHP8 application. This document outlines the list of services used in the architecture, how they are networked and deployed, and how the solution can be scaled for increased demand. I also discuss the technical approach used to ensure zero downtime deployments supporting Continuous Integration and Continuous Deployment (CI/CD). Finally, addressed assumptions and trade-offs made between production, staging and development environments and propose a high-level disaster recovery plan for this solution.
 
 Architecture Overview:
 Used the following AWS services to build a highly scalable and available web application:
