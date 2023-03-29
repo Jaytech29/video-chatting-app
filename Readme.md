@@ -95,5 +95,19 @@ Disaster Recovery Plan:
 To ensure disaster recovery for the application, we propose the following high-level plan:
 We deploy the application in two availability zones for high availability. If one availability zone fails, the application can continue to operate in the other availability zone. We configure automatic backups for RDS and store the backups in S3 in a different region for disaster recovery. We use Route 53 to route traffic to the application in the other region if the primary region fails. We use CloudFront to deliver content to users from the other region if the primary region fails. We use AWS Lambda to run the PHP8 application code in response to events if the EC2 instances are not available in the primary region.
 
+On-Demand Development Instances with AWS EC2
+we have implemented an on-demand development instance service using AWS EC2.
+With AWS EC2, developers have the ability to spin up their own instances with customizable specifications and configurations, including the operating system, programming languages, and tools needed for their specific project. This enables developers to work in an environment that closely resembles the production environment and ensures consistency across the development team.
+The on-demand nature of this service means that developers can quickly and easily create instances as needed and avoid the hassle of waiting for IT to provision resources. Additionally, since instances are billed by the hour, we are able to keep costs down and provide an affordable solution for our development teams.
+Furthermore, with the ability to create and manage security groups and network access control lists (ACLs), we are able to ensure that our development instances are secure and only accessible by authorized users. This ensures the safety and confidentiality of our code and intellectual property.Overall, we believe that our implementation of on-demand development instances with AWS EC2 provides a scalable, flexible, and cost-effective solution for our development teams to work in a customizable environment that meets their unique needs.
+
+
+Developers automatic on-demand development instances which they can share internally:
+Virtual Machine-Based Development Environments: With a VM-based approach, you can create a fully-customized development environment with the exact tools and configuration needed for your application. Developers can then spin up their own instance of the VM as needed, and share access with others on the team.
+
+Infrastructure-as-Code: Use infrastructure-as-code (Terraform) to automate the provisioning of your development instances. With IaC, you can define your development environment as code, which makes it easy to spin up new instances on-demand and ensure consistency across your team.
+
+
+
 Conclusion:
 In this project submission document, we have designed and implemented a highly scalable and available web application on Amazon Web Services (AWS) using a variety of services including Elastic Load Balancer (ELB), Amazon RDS for MySQL, Amazon Elasticache for Redis, Amazon DynamoDB, Amazon S3, Amazon VPC, Amazon Route 53, AWS Elastic Kubernetes Service (EKS), Amazon EC2, Auto Scaling Group (ASG), Amazon CloudFront, Amazon Rekognition, AWS Lambda, Amazon Redshift, Amazon QuickSight, Amazon API Gateway, Amazon Cognito, AWS Inspector, and AWS Key Management Service (KMS). We have also discussed the technical approach used to ensure zero downtime deployments supporting Continuous Integration and Continuous Deployment (CI/CD) and proposed a high-level disaster recovery plan for this solution. 
