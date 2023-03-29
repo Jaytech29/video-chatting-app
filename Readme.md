@@ -1,133 +1,99 @@
-Project Summary:
-
-The PHP8 application project aims to develop a highly scalable and available web application using AWS services. The application will allow users to perform various functions and interact with data stored in a MySQL database, Redis cache, and S3 bucket. The application will also implement various AWS services such as ELB, Route 53, VPC, EKS, and DynamoDB to provide a robust and secure platform.
-
-Project Plan:
-
-The project plan for the PHP8 application is as follows:
-
-Requirements Gathering: Gather requirements for the application from stakeholders.
-
-Architecture and Design: Develop the architecture and design document for the application.
-
-Development: Develop the PHP8 application and integrate with AWS services.
-
-Testing: Perform unit, integration, and system testing to ensure the application meets the requirements.
-
-Deployment: Deploy the application to the production environment.
-
-Incident Management: Develop an incident management plan to handle any incidents or issues that arise.
-
-Monitoring and Alerting: Develop a monitoring and alerting plan to detect any issues in the application.
-
-Backup and Recovery: Develop a backup and recovery plan to ensure data is safe and recoverable in the event of a disaster.
-
-Security: Develop a security plan to ensure the application and data are secure from threats.
-
-Architecture and Design Document:
-
-The architecture and design document for the PHP8 application is as follows:
-
-AWS Services: Elastic Load Balancer (ELB), Amazon RDS for MySQL, Amazon Elasticache for Redis, Amazon DynamoDB, Amazon S3, Amazon VPC, Amazon Route 53, AWS Elastic Kubernetes Service (EKS), AWS Certificate Manager, AWS WAF, Amazon CloudWatch, Amazon SNS, Amazon SQS, Amazon Kinesis, Amazon EMR, AWS Glue, and Amazon Athena.
-
-Network Configuration: All services will be placed in the same VPC for security and to enable inter-service communication. Public subnets will be used for the ELB and bastion host, while private subnets will be used for the application and DB subnet will be used for RDS, Elasticache, and DynamoDB services. The security group rules will be defined to allow only necessary traffic in and out of each service.
-
-Scalability and High Availability: Amazon RDS will be configured to be highly scalable and fault-tolerant and ensure automatic failover. Elasticache for Redis and DynamoDB are both highly scalable and fault-tolerant services. The Elastic Load Balancer will be configured to distribute traffic across multiple instances, and it will be deployed in at least two availability zones. Amazon EKS can be used to automatically scale the number of instances running the PHP8 application based on the incoming traffic.
-
-Disaster Recovery: The latest database backup can be restored to a new RDS instance in another region. The latest Redis backup can be restored to a new Elasticache instance in another region. The latest DynamoDB data can be copied to a new DynamoDB instance in another region.
-
-Source Code Management Plan:
-
-The source code management plan for the PHP8 application is as follows:
-
-Git will be used as the version control system for the application.
-
-All code changes will be made on feature branches and merged into the main branch using pull requests.
-
-Code reviews will be performed on all pull requests.
-
-The master branch will only contain production-ready code.
-
-Configuration Management Plan:
-
-The configuration management plan for the PHP8 application is as follows:
-
-Terraform will be used to provision the entire infrastructure stack in code.
-
-All configuration changes will be made using Terraform and stored in version control.
-
-Infrastructure changes will be reviewed and tested before being applied to the production environment.
-
-Testing Plan:
-
-The testing plan for the PHP8 application is as follows:
-
-Unit Testing: PHPUnit will be used for unit testing to test individual functions and methods.
-
-Integration Testing: Integration testing will be performed to ensure all components of the application work together as expected.
-
-System Testing: System testing will be performed to ensure the entire system works as expected.
-
-Load Testing: Load testing will be performed to ensure the application can handle the expected load.
-
-Security Testing: Security testing will be performed to identify and fix any security vulnerabilities.
-
-Deployment Plan:
-
-The deployment plan for the PHP8 application is as follows:
-
-The application will be deployed using a continuous integration and continuous deployment (CI/CD) pipeline.
-
-The pipeline will be triggered by changes to the master branch in the Git repository.
-
-The pipeline will build the Docker images, push them to the Docker registry, and deploy them to the Kubernetes cluster.
-
-Incident Management Plan:
-
-The incident management plan for the PHP8 application is as follows:
-
-An incident response team will be designated to handle incidents and issues.
-
-The team will be responsible for identifying and containing the incident, assessing the impact, and restoring services to normal operation.
-
-The team will document the incident and its resolution.
-
-Monitoring and Alerting Plan:
-
-The monitoring and alerting plan for the PHP8 application is as follows:
-
-CloudWatch will be used to monitor the application and infrastructure.
-
-Custom metrics will be defined to monitor key performance indicators (KPIs).
-
-CloudWatch alarms will be used to alert the incident response team if any KPIs fall below a certain threshold.
-
-Backup and Recovery Plan:
-
-The backup and recovery plan for the PHP8 application is as follows:
-
-Amazon RDS and Elasticache will be backed up daily.
-
-Amazon S3 will be used to store backup files.
-
-Backups will be encrypted using AWS KMS.
-
-In the event of a disaster, the latest backup files will be used to restore services.
-
-Security Plan:
-
-The security plan for the PHP8 application is as follows:
-
-All services will be deployed in a private subnet with no direct access from the internet.
-
-Security group rules will be defined to restrict traffic to only necessary ports and services.
-
-SSL/TLS will be used to encrypt traffic between services.
-
-IAM roles and policies will be used to restrict access to AWS resources.
-
-AWS WAF will be used to protect against web application attacks.
+Project Submission Document: 
+Building a Highly Scalable and Available Web Application on AWS
+
+Introduction:
+I have designed and implemented a highly scalable and available web application on Amazon Web Services (AWS) for a PHP8 application. This document outlines the list of services used in the architecture, how they are networked and deployed, and how the solution can be scaled for increased demand. I also discuss the technical approach used to ensure zero downtime deployments supporting Continuous Integration and Continuous Deployment (CI/CD). Finally, Address assumptions and trade-offs made between production, staging, and development environments and propose a high-level disaster recovery plan for this solution.
+
+Architecture Overview:
+Used the following AWS services to build a highly scalable and available web application:
+
+Elastic Load Balancer (ELB), Amazon RDS for MySQL, Amazon Elasticache for Redis, Amazon DynamoDB
+Amazon S3, Amazon VPC, Amazon Route 53, AWS Elastic Kubernetes Service (EKS). Amazon EC2
+Auto Scaling Group (ASG), Amazon CloudFront, Amazon Rekognition, AWS Lambda, Amazon Redshift
+Amazon QuickSight, Amazon API Gateway, Amazon Cognito, AWS Inspector, AWS Key Management Service (KMS),  Amazon CloudWatch, Amazon SNS, Amazon SQS, Amazon Kinesis, Amazon EMR
+AWS Certificate Manager, AWS WAF, AWS Glue, Amazon Athena, AWS IAM
+
+ELB provides load balancing to distribute incoming traffic across multiple instances. We can deploy ELB in multiple availability zones to ensure high availability. 
+Amazon RDS for MySQL as a managed database service that provides a highly available and scalable MySQL database. We configure automatic backups, replication, and failover for RDS. 
+Amazon Elasticache for Redis is a fully managed Redis service that provides high performance and scalability. It can be used as a cache layer to improve the performance of the application. 
+Amazon DynamoDB as a fully managed NoSQL database service that provides high scalability and availability. We can use DynamoDB to store non-relational data with high throughput and low latency.
+ Amazon S3 is a highly scalable and available object storage service. We can use S3 to store and retrieve data such as images, videos, and documents.
+
+Amazon VPC as a virtual private cloud service that provides a private network environment in AWS. We can create subnets, route tables, and network ACLs to define network access and communication between instances. 
+Amazon Route 53 is a highly available and scalable DNS service that can be used to route traffic to the application. We can configure Route 53 to route traffic to ELB, instances, or other services.
+
+AWS Elastic Kubernetes Service (EKS) is a managed Kubernetes service that can be used to deploy and manage containerized applications. We can use EKS to deploy the PHP8 application in a containerized environment. 
+Amazon EC2 is a scalable compute service that can be used to launch and manage virtual servers in the cloud. We use EC2 instances to run the PHP8 application.
+
+Auto Scaling Group (ASG) is a service that can be used to automatically adjust the number of EC2 instances based on the demand. We use ASG to scale up or down the number of instances to ensure high availability and reduce costs. 
+Amazon CloudFront is a content delivery network (CDN) service that can be used to distribute content to users with low latency and high transfer speeds. We can use CloudFront to cache and deliver static and dynamic content to users.
+
+Amazon Rekognition is a service that can be used to analyze images and videos using machine learning algorithms. We use Rekognition to detect objects, faces, text, and scenes in images and videos. 
+AWS Lambda is a serverless compute service that can be used to run code without provisioning or managing servers. We use Lambda to run the PHP8 application code in response to events.
+ Amazon Redshift is a fully managed data warehouse service that can be used to analyze large amounts of data. We can use Redshift to store and analyze data generated by the application.
+
+Amazon QuickSight is a business intelligence (BI) service that can be used to create dashboards and visualizations. We can use QuickSight to visualize and analyze data stored in Redshift.
+ Amazon API Gateway is a fully managed service that can be used to create, deploy, and manage APIs. We can use API Gateway to create a RESTful API to expose the application's functionality to external clients.
+ Amazon Cognito is an identity management service that can be used to authenticate and authorize users. We use Cognito to authenticate users and manage their access to the application.
+
+AWS Inspector is a security assessment service that can be used to identify security vulnerabilities in the application. We use Inspector to scan the application for security issues and provide recommendations to remediate them. 
+AWS Key Management Service (KMS) is a fully managed service that can be used to create and control the encryption keys used to encrypt data. We use KMS to encrypt data stored in S3, RDS, and other services.
+
+Network Topology:
+We deploy the PHP8 application in a highly available and scalable manner using the following network topology:
+We create a VPC with two availability zones.
+We create two public subnets and two private subnets, one in each availability zone.
+We deploy an ELB in the public subnets to distribute incoming traffic to the EC2 instances in the private subnets.
+We deploy an RDS instance in the private subnet to provide a highly available and scalable MySQL database.
+We deploy an Elasticache Redis cluster in the private subnet to provide a cache layer for the application.
+We deploy a DynamoDB table in the private subnet to store non-relational data.
+We deploy the PHP8 application in an EKS cluster in the private subnet using EC2 instances as worker nodes.
+We use an ASG to automatically adjust the number of EC2 instances based on the demand.
+We deploy CloudFront in front of ELB to cache and deliver static and dynamic content to users.
+We use Amazon Rekognition to analyze images and videos.
+We use Lambda to run the PHP8 application code in response to events.
+We store and analyze data in Redshift and QuickSight.
+We expose the application's functionality to external clients using API Gateway.
+We authenticate and authorize users using Cognito.
+We use Inspector to scan the application for security vulnerabilities.
+We encrypt data stored in S3, RDS, and other services using KMS.
+
+Scalability:
+To scale the application for increased demand, we can:
+
+Increase the number of EC2 instances in the ASG to handle more traffic.
+Use larger instance types for the EC2 instances to handle more requests per second.
+Use multiple EKS clusters in different regions to handle traffic from different geographic regions.
+Use Amazon DynamoDB to store non-relational data with high throughput and low latency.
+Use Amazon ElastiCache for Redis as a cache layer to improve the performance of the application.
+Use Amazon S3 to store and retrieve data such as images, videos, and documents.
+Use Amazon CloudFront to cache and deliver static and dynamic content to users.
+Use Amazon Rekognition to analyze images and videos.
+Use Amazon Redshift to store and analyze data generated by the application.
+Use API Gateway to expose the application's functionality to external clients.
+Use Amazon Cognito to authenticate and authorize users.
+Use Inspector to scan the application for security vulnerabilities.
+
+
+CI/CD:
+To ensure zero downtime deployments and support Continuous Integration and Continuous Deployment (CI/CD).
+We use Github as our SCM, Jenkins as our automation tool and integrated Jenkins through plugins with composer as our build tool, sonarqube for code quality analysis, nexus as our artifactory. This ends the CI job. 
+A CD job is triggered automatically and that job involved Jenkins integration with ansible which is a configuration management tool. It triggers the docker build engine to build the image, tag it and push to image registry. And ansible then runs the deployment playbook to deploy the application.
+We use deployment object in k8s with rolling update strategy so we can rollout and rollback with zero down time.
+
+
+Code is committed to the source code manager (SCM) by developers. Jenkins detects the code changes and triggers a build job. The PHP build tool Composer is used to build the PHP code and generate an executable artifact. The artifact is then sent to SonarQube for static code analysis and quality checks. If the code passes the quality checks, the artifact is stored in the Nexus artifact repository for future use. Next, Ansible is used to build a Docker image of the artifact. The playbook pulls the artifact and uses a dockerfile to build the image. The Docker image is then tagged and pushed to Docker Hub for distribution. Finally, another Ansible playbook is used to deploy the Docker image to a Kubernetes (K8s) cluster. The playbook pulls the image from Docker Hub and deploys it to the K8s cluster.
+This CI/CD pipeline ensures that code changes are automatically built, tested, and deployed in a consistent and reliable manner. It also provides feedback to the developers on the quality of the code and helps maintain a high level of code quality over time.
+
+Assumptions and Trade-offs:
+We made some assumptions and trade-offs between production, staging, and development environments to ensure cost-effectiveness, scalability, and high availability.
+In the production environment, we deployed the application in two availability zones for high availability. However, in the staging and development environments, we deployed the application in a single availability zone to reduce costs.
+We used Amazon RDS for MySQL as a managed database service for the production environment, which provides automatic backups, replication, and failover for high availability. However, in the staging and development environments, we used Amazon Aurora Serverless to reduce costs. Aurora Serverless is a fully managed database service that automatically scales up and down based on the demand, which reduces costs for development and staging environments where the workload is low.
+In the production environment, we used Amazon CloudFront to cache and deliver content to users with low latency and high transfer speeds. However, in the staging and development environments, we did not use CloudFront to reduce costs.
+
+Disaster Recovery Plan:
+To ensure disaster recovery for the application, we propose the following high-level plan:
+We deploy the application in two availability zones for high availability. If one availability zone fails, the application can continue to operate in the other availability zone. We configure automatic backups for RDS and store the backups in S3 in a different region for disaster recovery. We use Route 53 to route traffic to the application in the other region if the primary region fails. We use CloudFront to deliver content to users from the other region if the primary region fails. We use AWS Lambda to run the PHP8 application code in response to events if the EC2 instances are not available in the primary region.
 
 Conclusion:
-
-The PHP8 application project aims to develop a highly scalable and available web application using AWS services. The application will implement various AWS services such as ELB, Route 53, VPC, EKS, and DynamoDB to provide a robust and secure platform. The project plan includes requirements gathering, architecture and design, development, testing, deployment, incident management, monitoring and alerting, backup and recovery, and security. The application will be developed using Git as the version control system, Terraform as the configuration management tool, and deployed using a CI/CD pipeline. The project plan ensures that the application is scalable, highly available, secure, and can handle any incidents or issues that may arise.
+In this project submission document, we have designed and implemented a highly scalable and available web application on Amazon Web Services (AWS) using a variety of services including Elastic Load Balancer (ELB), Amazon RDS for MySQL, Amazon Elasticache for Redis, Amazon DynamoDB, Amazon S3, Amazon VPC, Amazon Route 53, AWS Elastic Kubernetes Service (EKS), Amazon EC2, Auto Scaling Group (ASG), Amazon CloudFront, Amazon Rekognition, AWS Lambda, Amazon Redshift, Amazon QuickSight, Amazon API Gateway, Amazon Cognito, AWS Inspector, and AWS Key Management Service (KMS). We have also discussed the technical approach used to ensure zero downtime deployments supporting Continuous Integration and Continuous Deployment (CI/CD) and proposed a high-level disaster recovery plan for this solution. 
