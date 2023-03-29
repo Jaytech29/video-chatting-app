@@ -1,1 +1,129 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: php-app
+  template:
+    metadata:
+      labels:
+        app: php-app
+    spec:
+      containers:
+        - name: php-app
+          image: my-php-app-image:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: MYSQL_HOST
+              value: "mysql-db.example.com"
+            - name: REDIS_HOST
+              value: "redis.example.com"
+            - name: DYNAMODB_ENDPOINT
+              value: "dynamodb.us-east-1.amazonaws.com"
+            - name: AWS_REGION
+              value: "us-east-1"
+            - name: S3_BUCKET
+              value: "my-s3-bucket"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-app
+spec:
+  selector:
+    app: php-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-app
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: php-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /php
+            pathType: Prefix
+            backend:
+              service:
+                name: php-app
+                port:
+                  name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: ExternalName
+  externalName: mysql-db.example.com
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamodb
+spec:
+  type: ExternalName
+  externalName: dynamodb.us-east-1.amazonaws.com
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s3
+spec:
+  type: ExternalName
+  externalName: my-s3-bucket.s3.amazonaws.com
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
