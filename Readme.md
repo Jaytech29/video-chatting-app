@@ -14,58 +14,58 @@ Auto Scaling Group (ASG), Amazon CloudFront, Amazon Rekognition, AWS Lambda, Ama
 Amazon QuickSight, Amazon API Gateway, Amazon Cognito, AWS Inspector, AWS Key Management Service (KMS),  Amazon CloudWatch, Amazon SNS, Amazon SQS, Amazon Kinesis, Amazon EMR
 AWS Certificate Manager, AWS WAF, AWS Glue, Amazon Athena, AWS IAM
 
-ELB provides load balancing to distribute incoming traffic across multiple instances. We can deploy ELB in multiple availability zones to ensure high availability. 
+ELB provides load balancing to distribute incoming traffic across multiple instances. We deployed ELB in multiple availability zones to ensure high availability. 
 
 Amazon RDS for MySQL as a managed database service that provides a highly available and scalable MySQL database. We configure automatic backups, replication, and failover for RDS. 
 
-Amazon Elasticache for Redis is a fully managed Redis service that provides high performance and scalability. It can be used as a cache layer to improve the performance of the application. 
+Amazon Elasticache for Redis is a fully managed Redis service that provides high performance and scalability. It is used as a cache layer to improve the performance of the application. 
 
-Amazon DynamoDB as a fully managed NoSQL database service that provides high scalability and availability. We can use DynamoDB to store non-relational data with high throughput and low latency.
+Amazon DynamoDB as a fully managed NoSQL database service that provides high scalability and availability. We used DynamoDB to store non-relational data with high throughput and low latency.
 
-Amazon S3 is a highly scalable and available object storage service. We can use S3 to store and retrieve data such as images, videos, and documents.
+Amazon S3 is a highly scalable and available object storage service. We used S3 to store and retrieve data such as images, videos, and documents.
  
-Amazon VPC as a virtual private cloud service that provides a private network environment in AWS. We create subnets (public, private and database), route tables, and network ACLs to define network access and communication between instances. 
+Amazon VPC as a virtual private cloud service that provides a private network environment in AWS. We created subnets (public, private and database), route tables, and network ACLs and internet gateway to define network access and communication between instances. 
 
-Amazon Route 53 is a highly available and scalable DNS service that can be used to route traffic to the application. We can configure Route 53 to route traffic to ELB, instances, or other services.
+Amazon Route 53 is a highly available and scalable DNS service that can be used to route traffic to the application. We created records and configured Route 53 to route traffic to ELB and other services.
 
-AWS Elastic Kubernetes Service (EKS) is a managed Kubernetes service that can be used to deploy and manage containerized applications. We can use EKS to deploy the PHP8 application in a containerized environment. 
+AWS Elastic Kubernetes Service (EKS) is a managed Kubernetes service that can be used to deploy and manage containerized applications. We used EKS to deploy the PHP8 application in a containerized environment. 
 
-Amazon EC2 is a scalable compute service that can be used to launch and manage virtual servers in the cloud. We use EC2 instances to run the PHP8 application.
+Amazon EC2 is a scalable compute service that can be used to launch and manage virtual servers in the cloud. We use EC2 instances for bastion host and run the PHP8 application.
 
-Auto Scaling Group (ASG) is a service that can be used to automatically adjust the number of EC2 instances based on the demand. We use ASG to scale up or down the number of instances to ensure high availability and reduce costs. 
+Auto Scaling Group (ASG) is a service that can be used to automatically adjust the number of EC2 instances based on the demand. We used ASG to scale up or down the number of instances to ensure high availability and reduce costs. 
 
-Amazon CloudFront is a content delivery network (CDN) service that can be used to distribute content to users with low latency and high transfer speeds. We can use CloudFront to cache and deliver static and dynamic content to users.
+Amazon CloudFront is a content delivery network (CDN) service that can be used to distribute content to users with low latency and high transfer speeds. We used CloudFront to cache and deliver static and dynamic content to users and leveraged the edge locations.
 
-Amazon Rekognition is a service that can be used to analyze images and videos using machine learning algorithms. We use Rekognition to detect objects, faces, text, and scenes in images and videos. 
+Amazon Rekognition is a service that can be used to analyze images and videos using machine learning algorithms. We used Rekognition to detect objects, faces, text, and scenes in images and videos since we are in the communications industry.
 
-AWS Lambda is a serverless compute service that can be used to run code without provisioning or managing servers. We use Lambda to run the PHP8 application code in response to events.
+AWS Lambda is a serverless compute service that can be used to run code without provisioning or managing servers. We use Lambda to covert our video format to make it mobile friendly.
 
-Amazon Redshift is a fully managed data warehouse service that can be used to analyze large amounts of data. We can use Redshift to store and analyze data generated by the application.
+Amazon Redshift is a fully managed data warehouse service that can be used to analyze large amounts of data. We used Redshift to store and analyze data generated by the application over time.
 
-Amazon QuickSight is a business intelligence (BI) service that can be used to create dashboards and visualizations. We can use QuickSight to visualize and analyze data stored in Redshift.
+Amazon QuickSight is a business intelligence (BI) service that can be used to create dashboards and visualizations. We can use QuickSight to visualize and analyze data stored in Redshift so informed decisions can be made by management.
 
-Amazon API Gateway is a fully managed service that can be used to create, deploy, and manage APIs. We can use API Gateway to create a RESTful API to expose the application's functionality to external clients.
+Amazon API Gateway is a fully managed service that can be used to create, deploy, and manage APIs. We used API Gateway to create a RESTful API to expose the application's functionality to third party applications and external clients.
 
-Amazon Cognito is an identity management service that can be used to authenticate and authorize users. We use Cognito to authenticate users and manage their access to the application.
+Amazon Cognito is an identity management service that can be used to authenticate and authorize users. We used Cognito to authenticate users and manage their access to the application.
 
-AWS Inspector is a security assessment service that can be used to identify security vulnerabilities in the application. We use Inspector to scan the application for security issues and provide recommendations to remediate them. 
+AWS Inspector is a security assessment service that can be used to identify security vulnerabilities in the application. We used Inspector to scan the application for security issues and provide recommendations to remediate them. 
 
-AWS Key Management Service (KMS) is a fully managed service that can be used to create and control the encryption keys used to encrypt data. We use KMS to encrypt data stored in S3, RDS, and other services.
+AWS Key Management Service (KMS) is a fully managed service that can be used to create and control the encryption keys used to encrypt data. We use KMS to encrypt data stored in S3, RDS, Redshift and other services.
 
 Network Topology:
 We deploy the PHP8 application in a highly available and scalable manner using the following network topology:
-We create a VPC with two availability zones.
-We create two public subnets and two private subnets, one in each availability zone.
-We deploy an ELB in the public subnets to distribute incoming traffic to the EC2 instances in the private subnets.
-We deploy an RDS instance in the private subnet to provide a highly available and scalable MySQL database.
-We deploy an Elasticache Redis cluster in the private subnet to provide a cache layer for the application.
-We deploy a DynamoDB table in the private subnet to store non-relational data.
-We deploy the PHP8 application in an EKS cluster in the private subnet using EC2 instances as worker nodes.
+We created a VPC with two availability zones.
+We created one public subnets and two private subnets, one in each availability zone.
+We deployed an ELB in the public subnets to distribute incoming traffic to the instances in the private subnets.
+We deployed an RDS instance in the private subnet to provide a highly available and scalable MySQL database.
+We deployed an Elasticache Redis cluster in the private subnet to provide a cache layer for the application.
+We deployed a DynamoDB table in the private subnet to store non-relational data.
+We deployed the PHP8 application in an EKS cluster in the private subnet using EC2 instances as worker nodes.
 We use an ASG to automatically adjust the number of EC2 instances based on the demand.
 We deploy CloudFront in front of ELB to cache and deliver static and dynamic content to users.
 We use Amazon Rekognition to analyze images and videos.
-We use Lambda to run the PHP8 application code in response to events.
-We store and analyze data in Redshift and QuickSight.
+We use Lambda to run the conversiton in response to events.
+We stored and analyzed data in Redshift and QuickSight.
 We expose the application's functionality to external clients using API Gateway.
 We authenticate and authorize users using Cognito.
 We use Inspector to scan the application for security vulnerabilities.
@@ -95,7 +95,7 @@ A CD job is triggered automatically and that job involved Jenkins integration wi
 We use deployment object in k8s with rolling update strategy so we can rollout and rollback with zero down time.
 
 
-Code is committed to the source code manager (SCM) by developers. Jenkins detects the code changes and triggers a build job. The PHP build tool Composer is used to build the PHP code and generate an executable artifact. The artifact is then sent to SonarQube for static code analysis and quality checks. If the code passes the quality checks, the artifact is stored in the Nexus artifact repository for future use. Next, Ansible is used to build a Docker image of the artifact. The playbook pulls the artifact and uses a dockerfile to build the image. The Docker image is then tagged and pushed to Docker Hub for distribution. Finally, another Ansible playbook is used to deploy the Docker image to a Kubernetes (K8s) cluster. The playbook pulls the image from Docker Hub and deploys it to the K8s cluster.
+Code is committed to the source code manager (SCM) by developers. Jenkins detects the code changes and triggers a build job. The PHP build tool Composer is used to build the PHP code and generate an executable artifact. The artifact is then sent to SonarQube for static code analysis and quality checks. If the code passes the quality checks, a copy of the artifact is stored in the Nexus artifact repository for future use. Next, Ansible is used to build a Docker image of the artifact. The playbook pulls the artifact and uses a dockerfile to build the image. The Docker image is then tagged and pushed to Docker Hub for distribution. Finally, another Ansible playbook is used to deploy the Docker image to a Kubernetes (K8s) cluster. The playbook pulls the image from Docker Hub and deploys it to the K8s cluster.
 This CI/CD pipeline ensures that code changes are automatically built, tested, and deployed in a consistent and reliable manner. It also provides feedback to the developers on the quality of the code and helps maintain a high level of code quality over time.
 
 Assumptions and Trade-offs:
@@ -106,7 +106,10 @@ In the production environment, we used Amazon CloudFront to cache and deliver co
 
 Disaster Recovery Plan:
 To ensure disaster recovery for the application, we propose the following high-level plan:
-We deploy the application in two availability zones for high availability. If one availability zone fails, the application can continue to operate in the other availability zone. We configure automatic backups for RDS and store the backups in S3 in a different region for disaster recovery. We use Route 53 to route traffic to the application in the other region if the primary region fails. We use CloudFront to deliver content to users from the other region if the primary region fails. We use AWS Lambda to run the PHP8 application code in response to events if the EC2 instances are not available in the primary region.
+We deploy the application in two availability zones for high availability. If one availability zone fails, the application can continue to operate in the other availability zone. 
+We configure automatic backups for RDS and store the backups in S3 in a different region for disaster recovery. 
+We use Route 53 to route traffic to the application in the other region if the primary region fails. 
+We use CloudFront to deliver content to users from the other region if the primary region fails. 
 
 On-Demand Development Instances with AWS EC2
 we have implemented an on-demand development instance service using AWS EC2.
